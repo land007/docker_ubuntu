@@ -27,7 +27,9 @@ RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
 CMD /etc/init.d/ssh start && bash
 #ENTRYPOINT /etc/init.d/ssh start && bash
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+#RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 #ENTRYPOINT /etc/init.d/ssh start && bash
 EXPOSE 20022/tcp

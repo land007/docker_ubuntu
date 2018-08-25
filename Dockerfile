@@ -34,6 +34,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 #ENTRYPOINT /etc/init.d/ssh start && bash
 EXPOSE 20022/tcp
 
-#docker stop ubuntu ; docker rm ubuntu ; docker run -it --privileged --name ubuntu land007/ubuntu:latest
+#docker stop ubuntu ; docker rm ubuntu ; docker run -it --privileged --name ubuntu land007/ubuntu:16.04
 
 

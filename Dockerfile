@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:16.04
 
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 

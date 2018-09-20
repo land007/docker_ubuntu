@@ -1,9 +1,9 @@
-FROM ubuntu:16.04
+FROM ubuntu:latest
 
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
 RUN apt-get update && apt-get upgrade -y && apt-get clean
-RUN apt-get install -y net-tools vim curl wget unzip screen openssh-server git subversion locales
+RUN apt-get install -y net-tools vim curl wget unzip screen openssh-server git subversion locales software-properties-common
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -35,4 +35,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 EXPOSE 20022/tcp
 
 
+#18.04
+#docker stop ubuntu ; docker rm ubuntu ; docker run -it --privileged --name ubuntu land007/ubuntu:latest
+#docker stop ubuntu ; docker rm ubuntu ; docker run -it -p 222:20022 -p 3000:3000 -p 3001:3001 -p 3002:3002 -p 3003:3003 -p 3004:3004 -p 3005:3005 -p 3006:3006 -p 3007:3007 -p 3008:3008 -p 3009:3009 --privileged --name ubuntu land007/ubuntu:latest
+#16.04
 #docker stop ubuntu ; docker rm ubuntu ; docker run -it --privileged --name ubuntu land007/ubuntu:16.04
+#docker stop ubuntu ; docker rm ubuntu ; docker run -it -p 222:20022 -p 3000:3000 -p 3001:3001 -p 3002:3002 -p 3003:3003 -p 3004:3004 -p 3005:3005 -p 3006:3006 -p 3007:3007 -p 3008:3008 -p 3009:3009 --privileged --name ubuntu land007/ubuntu:16.04

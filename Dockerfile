@@ -16,14 +16,15 @@ ENV LC_ALL zh_CN.UTF-8
 RUN apt-get install -y --force-yes --no-install-recommends fonts-wqy-microhei ttf-wqy-zenhei
 
 RUN echo "MaxAuthTries 20" >> /etc/ssh/sshd_config && echo "ClientAliveInterval 30" >> /etc/ssh/sshd_config && echo "ClientAliveCountMax 3" >> /etc/ssh/sshd_config && echo "TMOUT=90" >> /etc/profile
-RUN sed -i 's/#Port 22/Port 20022/g' /etc/ssh/sshd_config
+RUN sed -i 's/Port 22/Port 20022/g' /etc/ssh/sshd_config
 
 RUN useradd -s /bin/bash -m land007
 RUN echo "land007:1234567" | /usr/sbin/chpasswd
 #land007:x:1000:1000::/home/land007:/bin/bash
 RUN sed -i "s/^land007:x.*/land007:x:0:1000::\/home\/land007:\/bin\/bash/g" /etc/passwd
-RUN set /files/etc/ssh/sshd_config/PermitRootLogin yes
-RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+#RUN set /files/etc/ssh/sshd_config/PermitRootLogin yes
+#RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+RUN sed -i "s/^PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
 
 CMD /etc/init.d/ssh start && bash
 #ENTRYPOINT /etc/init.d/ssh start && bash

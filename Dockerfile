@@ -30,6 +30,7 @@ CMD /etc/init.d/ssh start && bash
 #RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get install -y tzdata
 
 #ENTRYPOINT /etc/init.d/ssh start && bash
 EXPOSE 20022/tcp

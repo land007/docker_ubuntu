@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
 RUN apt-get update && apt-get upgrade -y && apt-get clean
-RUN apt-get install -y net-tools iputils-ping vim curl wget unzip screen openssh-server git subversion locales software-properties-common lsof nmon sysstat pciutils kmod
+RUN apt-get install -y net-tools iputils-ping vim curl wget unzip screen openssh-server git subversion locales software-properties-common lsof nmon sysstat netcat-traditional pciutils kmod
 #iostat 1
 #vmstat 1
 #nmon
@@ -34,6 +34,7 @@ CMD /etc/init.d/ssh start && bash
 #RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get install -y tzdata
 
 #ENTRYPOINT /etc/init.d/ssh start && bash
 EXPOSE 20022/tcp

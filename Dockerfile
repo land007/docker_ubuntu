@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
 RUN apt-get update && apt-get upgrade -y && apt-get clean
-RUN apt-get install -y net-tools iputils-ping vim curl wget unzip screen openssh-server git subversion locales software-properties-common lsof nmon sysstat netcat-traditional pciutils kmod
+RUN apt-get install -y net-tools iputils-ping vim curl wget unzip screen openssh-server git subversion locales software-properties-common lsof nmon sysstat netcat-traditional pciutils kmod uuid-runtime
 #iostat 1
 #vmstat 1
 #nmon
@@ -29,19 +29,26 @@ RUN sed -i "s/^land007:x.*/land007:x:0:1000::\/home\/land007:\/bin\/bash/g" /etc
 #RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 RUN sed -i "s/^PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
 
-CMD /etc/init.d/ssh start && bash
-#ENTRYPOINT /etc/init.d/ssh start && bash
 #RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get install -y tzdata
 
+RUN echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_time
+RUN echo "land007/ubuntu" >> /.image_name
+ADD analytics.sh /
+ADD start.sh /
+RUN chmod +x /*.sh
+
 #ENTRYPOINT /etc/init.d/ssh start && bash
 EXPOSE 20022/tcp
 
+#ENTRYPOINT /etc/init.d/ssh start && bash
+CMD /etc/init.d/ssh start && /start.sh && bash
 
 #18.04
-#docker stop ubuntu ; docker rm ubuntu ; docker run -it --privileged --name ubuntu land007/ubuntu:latest
+#curl -d "v=1&t=pageview&tid=UA-10056144-4&cid=&dh=docker.qhkly.com&dp=land007/ubuntu&dt={start_time:2019-05-26_11:07:12,image_time:2019-05-26_11:02:48}" https://www.google-analytics.com/collect
+#docker stop ubuntu1 ; docker rm ubuntu1; docker run -it --privileged --name ubuntu1 land007/ubuntu:latest
 #docker stop ubuntu ; docker rm ubuntu ; docker run -it -p 222:20022 -p 3000:3000 -p 3001:3001 -p 3002:3002 -p 3003:3003 -p 3004:3004 -p 3005:3005 -p 3006:3006 -p 3007:3007 -p 3008:3008 -p 3009:3009 --privileged --name ubuntu land007/ubuntu:latest
 #16.04
 #docker stop ubuntu ; docker rm ubuntu ; docker run -it --privileged --name ubuntu land007/ubuntu:16.04

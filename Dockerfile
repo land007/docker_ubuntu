@@ -34,8 +34,10 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get install -y tzdata
 
-RUN echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_time
-RUN echo "land007/ubuntu" >> /.image_name
+RUN echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_times
+RUN echo $(date "+%Y-%m-%d_%H:%M:%S") > /.image_time
+RUN echo "land007/ubuntu" >> /.image_names
+RUN echo "land007/ubuntu" > /.image_name
 ADD analytics.sh /
 ADD start.sh /
 RUN chmod +x /*.sh

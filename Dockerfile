@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
 RUN apt-get update && apt-get upgrade -y && apt-get clean && \
-	apt-get install -y net-tools iputils-ping vim curl wget unzip screen openssh-server git subversion locales software-properties-common lsof nmon sysstat netcat-traditional pciutils kmod uuid-runtime
+	apt-get install -y net-tools iputils-ping vim curl wget unzip screen openssh-server git subversion locales software-properties-common lsof nmon iftop sysstat netcat-traditional pciutils kmod uuid-runtime
 #iostat 1
 #vmstat 1
 #nmon

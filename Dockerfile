@@ -2,8 +2,9 @@ FROM ubuntu:16.04
 
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
-RUN apt-get update && apt-get upgrade -y && apt-get clean && \
-	apt-get install -y net-tools iputils-ping vim curl wget unzip screen openssh-server git subversion locales software-properties-common lsof nmon iftop sysstat netcat-traditional pciutils kmod uuid-runtime
+RUN apt-get update && apt-get upgrade -y && \
+	apt-get install -y net-tools iputils-ping vim curl wget unzip screen openssh-server git subversion locales software-properties-common lsof nmon iftop sysstat netcat-traditional pciutils kmod uuid-runtime && \
+	apt-get clean
 #iostat 1
 #vmstat 1
 #nmon
@@ -30,21 +31,25 @@ RUN apt-get install -y --force-yes --no-install-recommends fonts-wqy-microhei tt
 #RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
-	apt-get install -y tzdata && \
+	apt-get install -y tzdata
+ADD check.sh / \
+	analytics.sh / \
+	start.sh / \
+	task.sh /
+RUN sed -i 's/\r$//' /*.sh ; chmod +x /*.sh && \
 	echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_times && \
 	echo $(date "+%Y-%m-%d_%H:%M:%S") > /.image_time && \
 	echo "land007/ubuntu" >> /.image_names && \
 	echo "land007/ubuntu" > /.image_name
-ADD analytics.sh /
-ADD start.sh /
-RUN chmod +x /*.sh
 
 #ENTRYPOINT /etc/init.d/ssh start && bash
 EXPOSE 20022/tcp
 
 #ENTRYPOINT /etc/init.d/ssh start && bash
-CMD /etc/init.d/ssh start && /start.sh && bash
+#CMD /etc/init.d/ssh start && /start.sh && bash
+CMD /task.sh ; /start.sh ; bash
 
+#docker build -t land007/ubuntu:latest .
 #18.04
 #curl -d "v=1&t=pageview&tid=UA-10056144-4&cid=&dh=docker.qhkly.com&dp=land007/ubuntu&dt={start_time:2019-05-26_11:07:12,image_time:2019-05-26_11:02:48}" https://www.google-analytics.com/collect
 #docker stop ubuntu1 ; docker rm ubuntu1; docker run -it --privileged --name ubuntu1 land007/ubuntu:latest

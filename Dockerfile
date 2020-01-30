@@ -32,10 +32,7 @@ RUN apt-get install -y --force-yes --no-install-recommends fonts-wqy-microhei tt
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
 	apt-get install -y tzdata
-ADD check.sh / \
-	analytics.sh / \
-	start.sh / \
-	task.sh /
+ADD *.sh /
 RUN sed -i 's/\r$//' /*.sh ; chmod +x /*.sh && \
 	echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_times && \
 	echo $(date "+%Y-%m-%d_%H:%M:%S") > /.image_time && \

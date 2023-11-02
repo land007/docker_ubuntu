@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:22.04
 
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
@@ -46,7 +46,8 @@ EXPOSE 20022/tcp
 #CMD /etc/init.d/ssh start && /start.sh && bash
 CMD /task.sh ; /start.sh ; bash
 
-#docker build -t land007/ubuntu:latest .
+#docker build -t land007/ubuntu:22.04 .
+#> docker buildx build --platform linux/amd64,linux/arm64/v8,linux/arm/v7 -t land007/ubuntu:22.04 --push .
 #18.04
 #curl -d "v=1&t=pageview&tid=UA-10056144-4&cid=&dh=docker.qhkly.com&dp=land007/ubuntu&dt={start_time:2019-05-26_11:07:12,image_time:2019-05-26_11:02:48}" https://www.google-analytics.com/collect
 #docker stop ubuntu1 ; docker rm ubuntu1; docker run -it --privileged --name ubuntu1 land007/ubuntu:latest
